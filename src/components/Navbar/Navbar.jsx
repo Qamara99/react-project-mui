@@ -63,10 +63,13 @@ function HoverDropdown({ label, items }) {
       >
         {items.map((item) => (
           <MenuItem
-            key={item}
+            key={item.label}
+            component={RouterLink}
+            to={item.path}
             sx={{ fontSize: '12px' }}
+            onClick={()=>setAnchorEl(null)}
           >
-            {item}
+            {item.label}
           </MenuItem>
         ))}
       </Menu>
@@ -91,15 +94,23 @@ export default function Navbar() {
             <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
               <HoverDropdown
                 label="Setting"
-                items={['My account', 'Checkout', 'Sign out']}
+                items={[
+                  {label:'My account', path:'/'},
+                  {label:'Checkout', path:'/'},
+                  {label:'Sign out', path:'/register'},
+                 , ]}
               />
               <HoverDropdown
                 label="EUR €"
-                items={['EUR €', 'USD $']}
+                items={[
+                    {label:'EUR €', path:'/'},
+                  {label:'USD $', path:'/'}]}
               />
               <HoverDropdown
                 label="English"
-                items={['English', 'ItaLiano']}
+                items={[
+                    {label:'English €', path:'/'},
+                  {label:'ItaLiano $', path:'/'}]}
               />
             </Box>
           </Toolbar>
