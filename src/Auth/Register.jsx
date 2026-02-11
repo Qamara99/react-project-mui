@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,6 +18,7 @@ import '@fontsource/roboto/900.css';
 import { Link as RouterLink } from 'react-router-dom';
 export default function Register() {
 
+  const [serverErrors,setServerErrors]=useState([]);
 let registerSchema= yup.object({
   firstName:yup.string().required("first name is required")
     .matches(/^[A-Za-z]+$/, "First name must contain only letters"),
@@ -45,7 +46,7 @@ let registerSchema= yup.object({
 
 
   const { control, register, handleSubmit, formState: { errors } } = useForm(
-    {resolver: yupResolver(registerSchema)}
+    {resolver: yupResolver(registerSchema),mode:'onBlur'}
   );
 
   const registerForm = async (values) => {
@@ -54,7 +55,7 @@ let registerSchema= yup.object({
       password: values.password,
        userName: values.email,
       fullName: `${values.firstName} ${values.lastName}`,
-      phoneNumber:"0598653580",
+      phoneNumber:values.phoneNumber,
      
     };
     try {
@@ -64,6 +65,7 @@ let registerSchema= yup.object({
       );
       console.log('response', response);
     } catch (error) {
+      setServerErrors(error.response.data.errors);
       console.log("FULL ERROR:", error.response?.data);
     }
   };
@@ -94,7 +96,7 @@ let registerSchema= yup.object({
           <Typography sx={{ fontSize: '13px', color: 'black', fontFamily: 'Roboto, Arial, sans-serif', }} >
             Already have an account?
             </Typography>
-            <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', },fontFamily: 'Roboto, Arial, sans-serif', fontSize: '13px' }} underline='none'>Log in instead!</Link>
+            <Link component={RouterLink} to={'/login'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', },fontFamily: 'Roboto, Arial, sans-serif', fontSize: '13px' }} underline='none'>Log in instead!</Link>
 </Box>
           
           <Box display="flex" alignItems="center" mb={3}>
@@ -180,7 +182,11 @@ let registerSchema= yup.object({
                error={errors.email}
               helperText={errors.email?.message}/>
             </Box>
-
+{serverErrors?.length>0 &&(
+  <Box mt={2} color={'red'}>
+    {serverErrors.map((err)=><Typography>{err}</Typography>)}
+    </Box>
+)}
             <Box
               key={'password'}
               display="flex"
@@ -198,7 +204,22 @@ let registerSchema= yup.object({
               helperText={errors.password?.message}/>
             </Box>
 
-
+ <Box
+              key={'phoneNumber'}
+              display="flex"
+              width="75%"
+              justifyContent={'space-between'}
+            >
+              <Typography sx={{ fontSize: '0.75rem', color: 'black', fontFamily: 'Roboto, Arial, sans-serif', }} >{'Phone Number'}</Typography>
+              <TextField {...register('phoneNumber')} sx={{ width: '70%' }} size="small"  InputProps={{
+                style: {
+                  height: 32,
+                  padding: '0 8px',
+                },
+              }} 
+               error={errors.phoneNumber}
+              helperText={errors.phoneNumber?.message}/>
+            </Box>
 
 
             <Box
