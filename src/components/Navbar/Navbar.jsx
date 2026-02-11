@@ -32,7 +32,7 @@ function HoverDropdown({ label, items }) {
     >
       <Box
         sx={{
-          display: 'flex',
+          display: 'flex' ,
           alignItems: 'center',
           cursor: 'pointer',
 
@@ -133,7 +133,7 @@ export default function Navbar() {
               <MenuIcon></MenuIcon>
             </IconButton>
 
-            <Box sx={{ display: 'flex', ml: 36, gap: 0.5 }}>
+            <Box sx={{ display: 'flex', ml: 'auto', gap: 0.5 }}>
               <Typography component="span" sx={{ flexGrow: 1, fontSize: '16px', color: 'black', fontWeight: 300, }}>
                 Call Us:
               </Typography>
