@@ -134,7 +134,7 @@ export default function Navbar() {
               alignItems: 'center', justifyContent: 'center', ml: 7,
             }}>
 
-              <Link component={RouterLink} to={'/'} sx={{ color: '#ec6b81' }} fontWeight="bold" underline='none' >Home</Link>
+              <Link component={RouterLink} to={'/home'} sx={{ color: '#ec6b81' }} fontWeight="bold" underline='none' >Home</Link>
               <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>About Us</Link>
               <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none' >Shop</Link>
               <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>Blog</Link>
