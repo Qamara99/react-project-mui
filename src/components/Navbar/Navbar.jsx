@@ -19,6 +19,7 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import logo from './../../assets/images/logo.png'
+import useAuthStore from '../../store/useAuthStore';
 function HoverDropdown({ label, items }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -77,6 +78,8 @@ function HoverDropdown({ label, items }) {
   );
 }
 export default function Navbar() {
+  const token=useAuthStore((state)=>state.token);
+  const logout=useAuthStore((state)=>state.logout);
   return (
     <>
       <Box sx={{ flexGrow: 1, padding: 0 }}>
@@ -204,9 +207,11 @@ export default function Navbar() {
               </IconButton>
               
 
-              
-               <IconButton component={RouterLink} to={'/cart'} sx={{display:'flex',gap:1, color: 'black', '&:hover': { backgroundColor: 'transparent',transition: '0.3s', '&:hover': { color: '#ec6b81', },}, }}>
-                <Badge
+              {token?
+              (
+                <>
+  <IconButton component={RouterLink} to={'/cart'} sx={{display:'flex',gap:1, color: 'black', '&:hover': { backgroundColor: 'transparent',transition: '0.3s', '&:hover': { color: '#ec6b81', },}, }}>
+     <Badge
                   badgeContent={2}
                   overlap="circular"
                   anchorOrigin={{
@@ -228,6 +233,19 @@ export default function Navbar() {
                 </Badge>
                <Typography sx={{fontWeight:'bold'}}> €58.32</Typography>
               </IconButton>
+              <Link component={Button} onClick={logout} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81 !important', },pt:1, textTransform: 'none'  }} fontWeight="bold" underline='none' >Sign out</Link>
+                </>
+              ):
+
+              (
+                <>
+                <Link component={RouterLink} to={'/login'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, pt:1}} fontWeight="bold" underline='none' > Sign in</Link>
+<Link component={RouterLink} to={'/register'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, pt:1}} fontWeight="bold" underline='none' > Register</Link>
+
+                </>
+              )
+              }
+             
             </Box>
           </Toolbar>
         </AppBar>

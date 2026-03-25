@@ -15,10 +15,13 @@ import {
 import Link from '@mui/material/Link';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/900.css';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import useAuthStore from '../store/useAuthStore';
 
 export default function Login() {
 
+const setToken=useAuthStore((state)=>state.setToken);
+const navigate=useNavigate();
   const [serverError, setServerError] = useState(null);
   const [openSuccess, setOpenSuccess] = useState(false);
 
@@ -40,8 +43,9 @@ export default function Login() {
           password: values.password
         }
       );
-if(response.status==200)
-  localStorage.setItem("accessToken", response.data.accessToken);
+if(response.status==200){
+setToken(response.data.accessToken);
+navigate('/');}
       console.log('response', response);
 
       setServerError(null);
