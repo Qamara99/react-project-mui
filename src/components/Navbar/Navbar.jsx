@@ -17,7 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
-import { Link as RouterLink } from 'react-router-dom';
+import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom';
 import logo from './../../assets/images/logo.png'
 import useAuthStore from '../../store/useAuthStore';
 function HoverDropdown({ label, items }) {
@@ -80,6 +80,11 @@ function HoverDropdown({ label, items }) {
 export default function Navbar() {
   const token=useAuthStore((state)=>state.token);
   const logout=useAuthStore((state)=>state.logout);
+const navigate=useNavigate();
+  const handlelogout=()=>{
+    logout();
+navigate('/login')
+  }
   return (
     <>
       <Box sx={{ flexGrow: 1, padding: 0 }}>
@@ -233,7 +238,7 @@ export default function Navbar() {
                 </Badge>
                <Typography sx={{fontWeight:'bold'}}> €58.32</Typography>
               </IconButton>
-              <Link component={Button} onClick={logout} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81 !important', },pt:1, textTransform: 'none'  }} fontWeight="bold" underline='none' >Sign out</Link>
+              <Link component={Button} onClick={handlelogout} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81 !important', },pt:1, textTransform: 'none'  }} fontWeight="bold" underline='none' >Sign out</Link>
                 </>
               ):
 
