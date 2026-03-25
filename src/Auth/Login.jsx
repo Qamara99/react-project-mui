@@ -40,8 +40,9 @@ export default function Login() {
           password: values.password
         }
       );
-
-      console.log('response', response.data);
+if(response.status==200)
+  localStorage.setItem("accessToken", response.data.accessToken);
+      console.log('response', response);
 
       setServerError(null);
       setOpenSuccess(true);

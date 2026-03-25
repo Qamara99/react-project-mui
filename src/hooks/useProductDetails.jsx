@@ -4,22 +4,23 @@ import {
   useQuery,
 
 } from '@tanstack/react-query'
-import axiosInstance from '../../api/axiosInstance';
-export default function useCategories(limit=4) {
+import axiosInstance from '../api/axiosInstance';
 
-     const getCategories = async () => {
+export default function useProductDetails(id) {
+  const getProduct = async () => {
         const response = await axiosInstance.get(
-          `/Categories?limit=${limit}`
+          `/Products/${id}`
         );
           console.log("FULL RESPONSE:", response);
     
-        return response.data.response.data;
+        return response.data.response;
         
       };
     
      const query = useQuery({
-        queryKey: ["categories","en",limit],
-        queryFn: getCategories,
+        queryKey: ["product","en",id],
+        queryFn: getProduct,
+           enabled: !!id,
         staleTime: 1000 * 60 * 5,
       });
     

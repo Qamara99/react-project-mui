@@ -3,10 +3,12 @@ import useProducts from '../hooks/useProducts';
 import { Box,Badge, Card, CardContent, CardMedia, CircularProgress, colors, Grid, Typography } from "@mui/material";
 import "@fontsource/roboto"
 import "@fontsource/poppins/700.css";
+import { Link } from 'react-router-dom';
+import Loader from '../ui/Loader';
 export default function Products() {
       const { data, isLoading, isError, error } = useProducts();
       console.log("data",data);
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <Loader />;
   if (isError) return <Box color="red">{error.message}</Box>;
  
   return (
@@ -20,6 +22,7 @@ export default function Products() {
       <Grid container spacing={3} mt={3} justifyContent="center" alignItems="center">
         {data.map(product =>
           <Grid item size={{ xs: 12, sm: 6, md: 4, lg: 2 }}>
+         <Link to={`/product/${product.id}`}>
             <Box sx={{width:"100%"}}>
             <Badge
   badgeContent="New"
@@ -46,7 +49,7 @@ color:"white"
       cursor: "pointer",
     },
             }}>
-        <CardMedia component={'img'} image={product.image} sx={{width:'220px',textAlign:"center"}}></CardMedia>
+        <CardMedia component={'img'} image={product.image} sx={{width:'180px',textAlign:"center"}}></CardMedia>
               <CardContent sx={{
       backgroundColor: "#eeeeee", width: "100%",height:"100%"}}>
                 <Typography component={'h4'} variant="h6" sx={{fontWeight:'bold'}}> {product.name} </Typography>
@@ -55,6 +58,7 @@ color:"white"
             </Card>
             </Badge>
             </Box>
+            </Link>  
           </Grid>)}
 
       </Grid>

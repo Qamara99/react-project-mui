@@ -205,7 +205,7 @@ export default function Navbar() {
               
 
               
-               <IconButton sx={{display:'flex',gap:1, color: 'black', '&:hover': { backgroundColor: 'transparent',transition: '0.3s', '&:hover': { color: '#ec6b81', },}, }}>
+               <IconButton component={RouterLink} to={'/cart'} sx={{display:'flex',gap:1, color: 'black', '&:hover': { backgroundColor: 'transparent',transition: '0.3s', '&:hover': { color: '#ec6b81', },}, }}>
                 <Badge
                   badgeContent={2}
                   overlap="circular"
