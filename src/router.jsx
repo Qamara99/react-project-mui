@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import ProductDetails from "./pages/Products/ProductDetails";
 import CategoriesPage from "./pages/categories/CategoriesPage";
+import Protectedrouter from "./Protectedrouter";
 
 const router = createBrowserRouter([
     {
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: "/home", element: <Home /> },
-            { path: "/cart", element: <Cart /> },
+            { path: "/cart", element:
+                <Protectedrouter><Cart /> </Protectedrouter> },
             { path: "/categories", element: <CategoriesPage /> },
             { path: "/login", element: <Login /> },
             { path: "/register", element: <Register /> },
