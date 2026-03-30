@@ -236,7 +236,7 @@ navigate('/login')
                 >    <ShoppingCartOutlinedIcon fontSize="medium" /> 
 
                 </Badge>
-               <Typography sx={{fontWeight:'bold'}}> €58.32</Typography>
+               <Typography sx={{fontWeight:'bold'}}> Cart</Typography>
               </IconButton>
               <Link component={Button} onClick={handlelogout} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81 !important', },pt:1, textTransform: 'none'  }} fontWeight="bold" underline='none' >Sign out</Link>
                 </>
