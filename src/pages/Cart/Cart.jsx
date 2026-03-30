@@ -1,11 +1,14 @@
 import React from 'react'
 import useCart from '../../hooks/useCart';
 import Loader from '../../ui/Loader';
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, Typography } from '@mui/material';
 import useRemoveFromCart from '../../hooks/useRemoveFromCart';
-
+import useUpdateCartItem from '../../hooks/useUpdateCartItem';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from "@mui/icons-material/Remove";
 export default function Cart() {
   const{mutate,isPending}=useRemoveFromCart();
+  const{mutate:updateQuantity,isPending:updateisPending}=useUpdateCartItem();
    const { data, isLoading, isError, error } = useCart();
         console.log("data",data);
         if (isLoading) return <Loader />;
@@ -52,9 +55,54 @@ export default function Cart() {
             {item.price}$
           </TableCell >
 
-          <TableCell sx={{ textAlign: "center", verticalAlign: "middle"}}>
+          {/* <TableCell sx={{ textAlign: "center", verticalAlign: "middle"}}>
             {item.count}
-          </TableCell>
+          </TableCell> */}
+         <TableCell sx={{ textAlign: "center", verticalAlign: "middle" }}>
+  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0.5 }}>
+    
+  
+    <IconButton
+      sx={{
+        border: "1px solid grey",
+        width: 25,
+        height: 25,
+      }}
+      onClick={() => {
+        if(item.count <= 1) return;
+        item.count -= 1;
+        item.totalPrice = item.count * item.price;
+        updateQuantity({ productId: item.productId, count: item.count });
+      }}
+      disabled={updateisPending}
+    >
+      <RemoveIcon fontSize="small" />
+    </IconButton>
+
+ 
+    <Typography sx={{ width: "25px", textAlign: "center" }}>
+      {item.count}
+    </Typography>
+
+  
+    <IconButton
+      sx={{
+        border: "1px solid grey",
+        width: 25,
+        height: 25,
+      }}
+      onClick={() => {
+        item.count += 1;
+        item.totalPrice = item.count * item.price;
+        updateQuantity({ productId: item.productId, count: item.count });
+      }}
+      disabled={updateisPending}
+    >
+      <AddIcon fontSize="small" />
+    </IconButton>
+
+  </Box>
+</TableCell>
 
           <TableCell sx={{ textAlign: "center", verticalAlign: "middle"}}> 
             {item.totalPrice}$

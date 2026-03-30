@@ -20,6 +20,7 @@ import Link from '@mui/material/Link';
 import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom';
 import logo from './../../assets/images/logo.png'
 import useAuthStore from '../../store/useAuthStore';
+import useCart from '../../hooks/useCart';
 function HoverDropdown({ label, items }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -85,6 +86,9 @@ const navigate=useNavigate();
     logout();
 navigate('/login')
   }
+
+  const {data}=useCart();
+  const itemCartcount=data?.items.length||0;
   return (
     <>
       <Box sx={{ flexGrow: 1, padding: 0 }}>
@@ -217,7 +221,7 @@ navigate('/login')
                 <>
   <IconButton component={RouterLink} to={'/cart'} sx={{display:'flex',gap:1, color: 'black', '&:hover': { backgroundColor: 'transparent',transition: '0.3s', '&:hover': { color: '#ec6b81', },}, }}>
      <Badge
-                  badgeContent={2}
+                  badgeContent={itemCartcount}
                   overlap="circular"
                   anchorOrigin={{
                     vertical: 'bottom',
