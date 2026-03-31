@@ -6,16 +6,18 @@ import useRemoveFromCart from '../../hooks/useRemoveFromCart';
 import useUpdateCartItem from '../../hooks/useUpdateCartItem';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from "@mui/icons-material/Remove";
+import { useNavigate } from 'react-router-dom';
 export default function Cart() {
   const{mutate,isPending}=useRemoveFromCart();
   const{mutate:updateQuantity,isPending:updateisPending}=useUpdateCartItem();
+  const navigate=useNavigate();
    const { data, isLoading, isError, error } = useCart();
         console.log("data",data);
         if (isLoading) return <Loader />;
   if (isError) return <Box color="red">{error.message}</Box>;
   return (
    <Box className="cart" sx={{py:5,width:"70%",px:30,textAlign:"center"}}>
-<Typography variant='h5' sx={{color:"#ec6b81",fontWeight:"600",pb:5}}>My Carts</Typography>
+<Typography variant='h5' sx={{color:"black",fontWeight:"600",pb:5}}>My Carts</Typography>
 
 <TableContainer component={Paper}     
       sx={{  borderRadius: "4px" }}>
@@ -124,6 +126,18 @@ export default function Cart() {
     </TableFooter>
   </Table>
 </TableContainer>
+<Box
+  sx={{
+    display: "flex",
+    justifyContent: "center", 
+    gap: 2, 
+    mt: 3,
+  }}
+>
+  <Button variant="contained" sx={{backgroundColor:"#ec6b81"}} onClick={()=>navigate('/checkout')}> Process to Checkout</Button>
+
+  <Button variant="outlined" sx={{color:"#ec6b81",borderColor:"#ec6b81"}} onClick={()=>navigate('/')} >Continue Shopping</Button>
+</Box>
    </Box>
   )
 }
