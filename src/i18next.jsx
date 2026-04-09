@@ -29,7 +29,8 @@ i18n
             "Additional 20% Off Sale Items – Please See Details":"Additional 20% Off Sale Items – Please See Details",
             "Add To Cart":"Add To Cart",
             "Available Quantity":"Available Quantity",
-            "Reviews":"Reviews"
+            "Reviews":"Reviews",
+            "My account":"My account"
         }
       },
       ar: {
@@ -55,7 +56,8 @@ i18n
           "Additional 20% Off Sale Items – Please See Details":"خصم إضافي 20٪ على العناصر المخفضة – يرجى الاطلاع على التفاصيل",
           "Add To Cart":"اضف الى السلة",
           "Available Quantity":"الكمية المتاحة",
-          "Reviews":"التقييمات"
+          "Reviews":"التقييمات",
+          "My account":"الملف الشخصي"
         }
       }
     },

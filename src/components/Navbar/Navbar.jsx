@@ -117,9 +117,11 @@ navigate('/login')
               <HoverDropdown
                 label={t('Setting')}
                 items={[
-                  {label:'My account', path:'/'},
-                  {label:'Checkout', path:'/'},
-                  {label:'Sign out', path:'/register'},
+                  {label:t('My account'), path:'/profile'},
+                 
+                 token
+      ? { label: t('Sign out'), onClick:handlelogout }
+      : { label: t('Sign in'), path: '/login' }
                  , ]}
               />
               <HoverDropdown
