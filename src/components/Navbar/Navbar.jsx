@@ -21,6 +21,8 @@ import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom';
 import logo from './../../assets/images/logo.png'
 import useAuthStore from '../../store/useAuthStore';
 import useCart from '../../hooks/useCart';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../i18next';
 function HoverDropdown({ label, items }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -64,21 +66,25 @@ function HoverDropdown({ label, items }) {
         }}
       >
         {items.map((item) => (
-          <MenuItem
-            key={item.label}
-            component={RouterLink}
-            to={item.path}
-            sx={{ fontSize: '12px' }}
-            onClick={()=>setAnchorEl(null)}
-          >
-            {item.label}
-          </MenuItem>
+         <MenuItem
+  key={item.label}
+  component={item.path ? RouterLink : "li"}
+  to={item.path}
+  sx={{ fontSize: '12px' }}
+  onClick={() => {
+    setAnchorEl(null);
+    if (item.onClick) item.onClick(); 
+  }}
+>
+  {item.label}
+</MenuItem>
         ))}
       </Menu>
     </Box>
   );
 }
 export default function Navbar() {
+  const{t,i18n}=useTranslation();
   const token=useAuthStore((state)=>state.token);
   const logout=useAuthStore((state)=>state.logout);
 const navigate=useNavigate();
@@ -87,6 +93,10 @@ const navigate=useNavigate();
 navigate('/login')
   }
 
+
+  // const changeLanguage = (lng) => {
+  //   i18n.changeLanguage(lng);
+  // }
   const {data}=useCart();
   const itemCartcount=data?.items.length||0;
   return (
@@ -100,12 +110,12 @@ navigate('/login')
           <Toolbar>
 
             <Typography component="div" sx={{ flexGrow: 1, fontSize: '13px', ml: 7 }}>
-              Additional 20% Off Sale Items – Please See Details
+             {t('Additional 20% Off Sale Items – Please See Details')} 
             </Typography>
 
             <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
               <HoverDropdown
-                label="Setting"
+                label={t('Setting')}
                 items={[
                   {label:'My account', path:'/'},
                   {label:'Checkout', path:'/'},
@@ -118,12 +128,19 @@ navigate('/login')
                     {label:'EUR €', path:'/'},
                   {label:'USD $', path:'/'}]}
               />
-              <HoverDropdown
-                label="English"
-                items={[
-                    {label:'English €', path:'/'},
-                  {label:'ItaLiano $', path:'/'}]}
-              />
+             <HoverDropdown
+  label={i18n.language === "ar" ? "العربية" : "English"}
+  items={[
+    {
+      label: "English",
+      onClick: () => i18n.changeLanguage("en"),
+    },
+    {
+      label: "العربية",
+      onClick: () => i18n.changeLanguage("ar"),
+    },
+  ]}
+/>
             </Box>
           </Toolbar>
         </AppBar>
@@ -146,11 +163,11 @@ navigate('/login')
               alignItems: 'center', justifyContent: 'center', ml: 7,
             }}>
 
-              <Link component={RouterLink} to={'/home'} sx={{ color: '#ec6b81' }} fontWeight="bold" underline='none' >Home</Link>
-              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>About Us</Link>
-              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none' >Shop</Link>
-              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>Blog</Link>
-              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>Contact Us</Link>
+              <Link component={RouterLink} to={'/home'} sx={{ color: '#ec6b81' }} fontWeight="bold" underline='none' >{t('Home')}</Link>
+              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>{t('About Us')}</Link>
+              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none' >{t('Shop')}</Link>
+              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>{t('Blog')}</Link>
+              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>{t('Contact Us')}</Link>
             </Box>
             <IconButton sx={{ display: { xs: 'flex', sm: 'none' } }}>
               <MenuIcon></MenuIcon>
@@ -158,7 +175,7 @@ navigate('/login')
 
             <Box sx={{ display: 'flex', ml: 'auto', gap: 0.5 }}>
               <Typography component="span" sx={{ flexGrow: 1, fontSize: '16px', color: 'black', fontWeight: 300, }}>
-                Call Us:
+                {t('Call Us')}:
               </Typography>
               <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>(+123)4567890</Link>
             </Box>
@@ -240,16 +257,16 @@ navigate('/login')
                 >    <ShoppingCartOutlinedIcon fontSize="medium" /> 
 
                 </Badge>
-               <Typography sx={{fontWeight:'bold'}}> Cart</Typography>
+               <Typography sx={{fontWeight:'bold'}}>{t('Cart')}</Typography>
               </IconButton>
-              <Link component={Button} onClick={handlelogout} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81 !important', },pt:1, textTransform: 'none'  }} fontWeight="bold" underline='none' >Sign out</Link>
+              <Link component={Button} onClick={handlelogout} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81 !important', },pt:1, textTransform: 'none'  }} fontWeight="bold" underline='none' >{t('Sign out')}</Link>
                 </>
               ):
 
               (
                 <>
-                <Link component={RouterLink} to={'/login'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, pt:1}} fontWeight="bold" underline='none' > Sign in</Link>
-<Link component={RouterLink} to={'/register'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, pt:1}} fontWeight="bold" underline='none' > Register</Link>
+                <Link component={RouterLink} to={'/login'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, pt:1}} fontWeight="bold" underline='none' > {t('Sign in')}</Link>
+<Link component={RouterLink} to={'/register'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, pt:1}} fontWeight="bold" underline='none' >{t('Register')} </Link>
 
                 </>
               )

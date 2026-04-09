@@ -6,11 +6,12 @@ import { useParams } from 'react-router-dom';
 import useProductDetails from '../../hooks/useProductDetails';
 import Loader from '../../ui/Loader';
 import useAddToCart from '../../hooks/useAddToCart';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductDetails() {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useProductDetails(id);
-
+const {t}=useTranslation();
  
   const [qty, setQty] = useState(1);
   const { mutate, isPending } = useAddToCart();
@@ -66,7 +67,7 @@ export default function ProductDetails() {
             </Typography>
 
             <Typography variant="body2" color="gray" mb={3}>
-              Available Quantity:  {data.quantity}
+              {t('Available Quantity')}:  {data.quantity}
             </Typography>
             <Divider sx={{ mb: 3 }} />
 
@@ -93,7 +94,7 @@ export default function ProductDetails() {
                 sx={{ borderRadius: 20, px: 4, color: "black", fontWeight: "Bold", background: "#eeee", "&:hover": { background: "#ed6a81", color: "white" } }}
                 onClick={handleAddToCart} disabled={isPending}
               >
-                Add To Cart
+                {t('Add To Cart')}
               </Button>
             </Box>
 
@@ -110,7 +111,7 @@ export default function ProductDetails() {
 
       </Box>
 
-      <Typography variant='h4' fontWeight={600} pl={22} mt={8} sx={{ color: "black" }}>Reviews</Typography>
+      <Typography variant='h4' fontWeight={600} pl={22} mt={8} sx={{ color: "black" }}>{t('Reviews')}</Typography>
       <Box pl={20} >
         <Card sx={{ width: "90%" }}>
           <CardContent>

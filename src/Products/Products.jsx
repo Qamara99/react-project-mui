@@ -5,17 +5,20 @@ import "@fontsource/roboto"
 import "@fontsource/poppins/700.css";
 import { Link } from 'react-router-dom';
 import Loader from '../ui/Loader';
+import { useTranslation } from 'react-i18next';
 export default function Products() {
       const { data, isLoading, isError, error } = useProducts();
+      
       console.log("data",data);
+      const{t}=useTranslation();
   if (isLoading) return <Loader />;
   if (isError) return <Box color="red">{error.message}</Box>;
  
   return (
     <Box className="products" mb={8} mt={6}>
       <Box>
-        <Typography component={"h4"} variant="h4" sx={{ color: 'black', fontWeight: 700, textAlign: 'center', pt: 3, fontFamily: 'poppins' }}>Our Products</Typography>
-        <Typography sx={{ color: '#867f7f', textAlign: 'center' }} >Add our products to weekly line up
+        <Typography component={"h4"} variant="h4" sx={{ color: 'black', fontWeight: 700, textAlign: 'center', pt: 3, fontFamily: 'poppins' }}>{t('Our Products')}</Typography>
+        <Typography sx={{ color: '#867f7f', textAlign: 'center' }} >{t('Add our products to weekly line up')}
         </Typography>
       </Box>
 

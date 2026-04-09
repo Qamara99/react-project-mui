@@ -5,8 +5,9 @@ import "@fontsource/poppins/700.css";
 import { Link } from "react-router-dom";
 import Category from "../../ui/Category";
 import Loader from "../../ui/Loader";
+import { useTranslation } from "react-i18next";
 export default function Categories() {
-
+const{t}=useTranslation();
   const { data, isLoading, isError, error } = useCategories();
   if (isLoading) return <Loader />;
   if (isError) return <Box color="red">{error.message}</Box>;
@@ -14,13 +15,13 @@ export default function Categories() {
   return (
     <Box className="categories">
       <Box>
-        <Typography component={"h4"} variant="h4" sx={{ color: 'black', fontWeight: 700, textAlign: 'center', pt: 3, fontFamily: 'poppins' }}>Popular Categories</Typography>
-        <Typography sx={{ color: '#867f7f', textAlign: 'center' }} >Some of our popular categories include cosmetic
+        <Typography component={"h4"} variant="h4" sx={{ color: 'black', fontWeight: 700, textAlign: 'center', pt: 3, fontFamily: 'poppins' }}>{t('Popular Categories')}</Typography>
+        <Typography sx={{ color: '#867f7f', textAlign: 'center' }} >{t('Some of our popular categories include cosmetic')}
         </Typography>
 
       </Box>
 <Box pl={32} >
-  <Link to="/categories" >show more</Link>
+  <Link to="/categories" >{t('show more')}</Link>
 
 </Box>    
   <Grid container spacing={3} mt={3} justifyContent="center" alignItems="center">

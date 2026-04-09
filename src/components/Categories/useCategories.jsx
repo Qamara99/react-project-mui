@@ -5,6 +5,7 @@ import {
 
 } from '@tanstack/react-query'
 import axiosInstance from '../../api/axiosInstance';
+import i18n from '../../i18next';
 export default function useCategories(limit=4) {
 
      const getCategories = async () => {
@@ -18,7 +19,7 @@ export default function useCategories(limit=4) {
       };
     
      const query = useQuery({
-        queryKey: ["categories","en",limit],
+        queryKey: ["categories",i18n.language,limit],
         queryFn: getCategories,
         staleTime: 1000 * 60 * 5,
       });
