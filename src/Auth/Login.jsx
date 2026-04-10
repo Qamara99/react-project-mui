@@ -126,7 +126,7 @@ navigate('/');}
 
  <Link
                 component={RouterLink}
-                to="/"
+                to="/forget-password"
                 sx={{
                   color: 'grey',
                   transition: '0.3s',

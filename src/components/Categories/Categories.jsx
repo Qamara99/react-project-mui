@@ -2,7 +2,8 @@ import { Box, Card, CardContent, CircularProgress, colors, Grid, Typography } fr
 import useCategories from "./useCategories";
 import "@fontsource/roboto"
 import "@fontsource/poppins/700.css";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 import Category from "../../ui/Category";
 import Loader from "../../ui/Loader";
 import { useTranslation } from "react-i18next";
@@ -21,7 +22,8 @@ const{t}=useTranslation();
 
       </Box>
 <Box pl={32} >
-  <Link to="/categories" >{t('show more')}</Link>
+  <Link  component={RouterLink} to="/categories" sx={{ color: '#ec6b81', fontWeight: 500,textDecoration: 'none','&:hover':{color:"grey"},
+   }} >{t('show more')}</Link>
 
 </Box>    
   <Grid container spacing={3} mt={3} justifyContent="center" alignItems="center">
