@@ -52,10 +52,7 @@ const router = createBrowserRouter([
                             path: "info",
                             element: <ProfileInfo />
                         },
-                        {
-      path: "change-email",
-      element: <changeEmail />
-    },
+            
                         {
                             path: "orders",
                             element: <ProfileOrder />
