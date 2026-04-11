@@ -17,6 +17,7 @@ import ProfileOrder from "./pages/Profile/ProfileOrder";
 import ForgetPasswordPage from "./pages/ForgetPassword/ForgetPasswordPage";
 import VerifyCode from "./pages/ForgetPassword/VerifyCode";
 import ResetPassword from "./pages/ForgetPassword/ResetPassword";
+import GetProductbyCategory from "./pages/getProductbyCategory";
 
 const router = createBrowserRouter([
     {
@@ -33,7 +34,8 @@ const router = createBrowserRouter([
                 path: "/checkout", element:
                     <Protectedrouter><Checkout /> </Protectedrouter>
             },
-            { path: "/categories", element: <CategoriesPage /> },
+            { path: "categories", element: <CategoriesPage /> },
+            { path: "category/:id", element: <GetProductbyCategory/> },
             { path: "/login", element: <Login /> },
             { path: "/forget-password", element: <ForgetPasswordPage /> },
             { path: "/verify-code", element: <VerifyCode /> },

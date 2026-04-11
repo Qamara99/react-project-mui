@@ -9,8 +9,9 @@ const authAxiosInstance = axios.create({
 });
 
 authAxiosInstance.interceptors.request.use((config) => {
-  const { token } = useAuthStore.getState();
-
+  const token =
+  useAuthStore.getState().token ||
+  localStorage.getItem("accessToken");
   config.headers["Accept-Language"] = i18n.language;
 
   if (token) {

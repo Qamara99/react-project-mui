@@ -2,12 +2,17 @@ import React, { useState } from 'react'
 import { Box, Typography, Button, TextField, IconButton, Divider, CircularProgress, Rating, Card, CardMedia, CardContent } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useProductDetails from '../../hooks/useProductDetails';
 import Loader from '../../ui/Loader';
 import useAddToCart from '../../hooks/useAddToCart';
 import { useTranslation } from 'react-i18next';
 
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import useAddReview from '../../hooks/useAddReview';
 export default function ProductDetails() {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useProductDetails(id);
@@ -15,6 +20,44 @@ const {t}=useTranslation();
  
   const [qty, setQty] = useState(1);
   const { mutate, isPending } = useAddToCart();
+
+  const [open, setOpen] = useState(false);
+const [rating, setRating] = useState(0);
+const [comment, setComment] = useState('');
+
+const { mutate: addReview, isPending:reviewPending } = useAddReview(id);
+
+const navigate = useNavigate();
+
+const handleOpen = () => {
+  const token = localStorage.getItem('accessToken');
+
+  if (!token) {
+    alert('You must login first to add a review');
+    return;
+  }
+
+  setOpen(true);
+};
+const handleClose = () => setOpen(false);
+
+const handleSubmitReview = () => {
+  if (!rating || !comment.trim()) return;
+
+  addReview(
+    {
+      Rating: Number(rating),
+      Comment: comment.trim(),
+    },
+    {
+      onSuccess: () => {
+        setOpen(false);
+        setRating(0);
+        setComment('');
+      },
+    }
+  );
+};
 
   const handleAddToCart = () => {
     mutate({
@@ -110,28 +153,91 @@ const {t}=useTranslation();
 
 
       </Box>
+<Box display="flex" justifyContent="space-between" alignItems="center" pl={22} mt={8} mb={2}>
+  <Typography variant='h4' fontWeight={600} sx={{ color: "black" }}>
+    {t('Reviews')}
+  </Typography>
 
-      <Typography variant='h4' fontWeight={600} pl={22} mt={8} sx={{ color: "black" }}>{t('Reviews')}</Typography>
-      <Box pl={20} >
-        <Card sx={{ width: "90%" }}>
-          <CardContent>
-            {data.reviews.map(review =>
-              <Box mb={6}>
-                <Typography gutterBottom variant="h5" component="div">
-                  {review.userName}
-                </Typography>
-                <Rating readOnly value={review.rating}></Rating>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>{review.comment}
-                </Typography>
+  <Button
+    variant="contained"
+    onClick={handleOpen}
+    sx={{ bgcolor: "#ec6b81", '&:hover': { bgcolor: "#d85a70" },mr:"140px" }}
+  >
+    Add Review
+  </Button>
+</Box>
+    <Box pl={20}>
+  {data.reviews.map((review, index) => (
+    <Card
+      key={index}
+      sx={{
+        width: "90%",
+        mb: 2,
+        boxShadow: 3,
+        borderRadius: 3,
+        transition: "0.3s",
+        '&:hover': {
+          boxShadow: 6,
+          transform: "scale(1.01)"
+        }
+      }}
+    >
+      <CardContent>
+        <Typography variant="h6">
+          {review.userName}
+        </Typography>
 
-                <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: "0.7rem" }}>{review.createdAt}</Typography>
+        <Rating readOnly value={review.rating} />
 
-                <Divider sx={{ mt: "10px" }}></Divider>
-              </Box>
-            )}
-          </CardContent>
-        </Card>
-      </Box>
+        <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
+          {review.comment}
+        </Typography>
+
+        <Typography variant="caption" sx={{ color: 'gray' }}>
+          {review.createdAt}
+        </Typography>
+      </CardContent>
+    </Card>
+  ))}
+
+</Box>
+
+<Dialog open={open} onClose={handleClose} fullWidth>
+  <DialogTitle sx={{ color: "#ec6b81" }}>
+    Add Review
+  </DialogTitle>
+
+  <DialogContent>
+    <Box mt={2}>
+      <Rating
+        value={rating}
+        onChange={(e, newValue) => setRating(newValue)}
+      />
+
+     <TextField
+  fullWidth
+  multiline
+  rows={4}
+  label="Comment"
+  value={comment}
+  onChange={(e) => setComment(e.target.value)}
+/>
+    </Box>
+  </DialogContent>
+
+  <DialogActions>
+    <Button onClick={handleClose}>Cancel</Button>
+
+    <Button
+      onClick={handleSubmitReview}
+      variant="contained"
+      disabled={isPending}
+      sx={{ bgcolor: "#ec6b81" }}
+    >
+      Submit
+    </Button>
+  </DialogActions>
+</Dialog>
     </>
   );
 }

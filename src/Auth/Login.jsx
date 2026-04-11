@@ -43,7 +43,7 @@ const navigate=useNavigate();
           password: values.password
         }
       );
-if(response.status==200){
+if(response.status===200){
 setToken(response.data.accessToken);
 navigate('/');}
       console.log('response', response);
