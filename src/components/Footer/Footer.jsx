@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Box, Grid, Typography, Link } from '@mui/material';
 import logolight from './../../assets/images/logolight.webp'

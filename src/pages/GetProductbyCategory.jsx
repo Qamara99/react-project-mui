@@ -1,8 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Box, Typography, Card, CardContent, CardMedia, Grid, Rating, Divider } from '@mui/material';
 import useGetProductByCategory from '../hooks/useGetProductByCategory';
 import Loader from '../ui/Loader';
+import useProducts from '../hooks/useProducts';
 
 export default function GetProductbyCategory() {
   const { id } = useParams();
@@ -11,6 +12,7 @@ console.log("data product category",data);
   if (isLoading) return <Loader />;
   if (isError) return <Box color="red">{error.message}</Box>;
 
+     
   return (
    
 
@@ -23,6 +25,8 @@ console.log("data product category",data);
       <Grid container spacing={3} mt={3} justifyContent="center" alignItems="center">
         {data?.map(product =>
           <Grid item size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                     <Link to={`/product/${product.id}`}>
+            
             <Box sx={{width:"100%"}}>
             
             <Card sx={{ pt: 2, textAlign: "center" ,justifyContent:"center",display:"flex",flexDirection:"column",alignItems:"center" ,
@@ -45,7 +49,7 @@ console.log("data product category",data);
             </Card>
             
             </Box>
-             
+             </Link>
           </Grid>)}
 
       </Grid>
