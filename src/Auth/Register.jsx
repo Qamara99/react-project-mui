@@ -53,7 +53,7 @@ let registerSchema= yup.object({
     const payload = {
       email: values.email,
       password: values.password,
-       userName: values.email,
+       userName: `${values.firstName}${values.lastName}`,
       fullName: `${values.firstName} ${values.lastName}`,
       phoneNumber:values.phoneNumber,
      

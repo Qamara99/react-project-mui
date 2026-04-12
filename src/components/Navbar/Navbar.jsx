@@ -114,16 +114,18 @@ navigate('/login')
             </Typography>
 
             <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-              <HoverDropdown
-                label={t('Setting')}
-                items={[
-                  {label:t('My account'), path:'/profile'},
-                 
-                 token
-      ? { label: t('Sign out'), onClick:handlelogout }
-      : { label: t('Sign in'), path: '/login' }
-                 , ]}
-              />
+             <HoverDropdown
+  label={t('Setting')}
+  items={[
+    token
+      ? { label: t('Sign out'), onClick: handlelogout }
+      : { label: t('Sign in'), path: '/login' },
+
+    ...(token
+      ? [{ label: t('My account'), path: '/profile' }]
+      : []),
+  ]}
+/>
               <HoverDropdown
                 label="EUR €"
                 items={[
@@ -167,7 +169,7 @@ navigate('/login')
 
               <Link component={RouterLink} to={'/home'} sx={{ color: '#ec6b81' }} fontWeight="bold" underline='none' >{t('Home')}</Link>
               <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>{t('About Us')}</Link>
-              <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none' >{t('Shop')}</Link>
+              <Link component={RouterLink} to={'/shop'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none' >{t('Shop')}</Link>
               <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>{t('Blog')}</Link>
               <Link component={RouterLink} to={'/'} sx={{ color: 'black', transition: '0.3s', '&:hover': { color: '#ec6b81', }, }} fontWeight="bold" underline='none'>{t('Contact Us')}</Link>
             </Box>

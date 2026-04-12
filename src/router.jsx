@@ -18,6 +18,7 @@ import ForgetPasswordPage from "./pages/ForgetPassword/ForgetPasswordPage";
 import VerifyCode from "./pages/ForgetPassword/VerifyCode";
 import ResetPassword from "./pages/ForgetPassword/ResetPassword";
 import GetProductbyCategory from "./pages/getProductbyCategory";
+import Shop from "./pages/Shop/Shop";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: "/home", element: <Home /> },
+            { path: "/shop", element: <Shop /> },
             {
                 path: "/cart", element:
                     <Protectedrouter><Cart /> </Protectedrouter>
