@@ -73,7 +73,10 @@ function HoverDropdown({ label, items }) {
   sx={{ fontSize: '12px' }}
   onClick={() => {
     setAnchorEl(null);
-    if (item.onClick) item.onClick(); 
+    if (typeof item.onClick === "function") {
+  item.onClick();
+}
+   
   }}
 >
   {item.label}
