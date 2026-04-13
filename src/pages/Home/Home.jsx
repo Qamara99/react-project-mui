@@ -1,7 +1,7 @@
 import React from 'react'
 import Categories from '../../components/Categories/Categories'
 import Products from '../../Products/Products'
-import Hero from '../../ui/hero'
+import Hero from '../../ui/Hero'
 import Dividerimg from '../../ui/Dividerimg'
 
 export default function Home() {
