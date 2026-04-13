@@ -23,7 +23,7 @@ export default function Products() {
       </Box>
 
       <Grid container spacing={3} mt={3} justifyContent="center" alignItems="center">
-        {data.map(product =>
+        {Array.isArray(data) && data.map(product => (
           <Grid item size={{ xs: 12, sm: 6, md: 4, lg: 2 }}>
          <Link to={`/product/${product.id}`}>
             <Box sx={{width:"100%"}}>
