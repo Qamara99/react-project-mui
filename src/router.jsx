@@ -17,7 +17,7 @@ import ProfileOrder from "./pages/Profile/ProfileOrder";
 import ForgetPasswordPage from "./pages/ForgetPassword/ForgetPasswordPage";
 import VerifyCode from "./pages/ForgetPassword/VerifyCode";
 import ResetPassword from "./pages/ForgetPassword/ResetPassword";
-import GetProductbyCategory from "./pages/getProductbyCategory";
+import GetProductbyCategory from "./pages/GetProductbyCategory";
 import Shop from "./pages/Shop/Shop";
 
 const router = createBrowserRouter([
