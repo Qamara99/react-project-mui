@@ -62,7 +62,7 @@ color:"white"
             </Badge>
             </Box>
             </Link>  
-          </Grid>)}
+          </Grid>))}
 
       </Grid>
 
